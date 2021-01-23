@@ -1,6 +1,7 @@
-From alpine:latest
-
+From alpine:3.12.0
+ 
 Copy ./run.bash ./tmp
+
 Copy ./default.conf ./tmp
 
 Run	apk add nginx php-fpm php-json php7-mysqli openrc vim && \

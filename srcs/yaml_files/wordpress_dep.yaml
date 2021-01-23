@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-deployment
+spec:
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  selector:
+    matchLabels:
+      app: wordpress 
+  template:
+    metadata:
+      labels:
+        app: wordpress 
+    spec:
+      containers:
+      - name: wordpress-service
+        image: my_wordpress
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5050
+
+---      
+
+apiVersion: v1
+kind: Service
+metadata:
+    name: wordpress-service
+    annotations:
+        metallb.universe.tf/allow-shared-ip: sharing key
+spec:
+    type: LoadBalancer
+    selector:
+        app: wordpress 
+    ports:
+        - protocol: TCP
+          port: 5050
+

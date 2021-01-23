@@ -1,5 +1,9 @@
 mv tmp/nginx.conf /etc/nginx/nginx.conf
 mv tmp/index.html  /www/index.html
-mkdir /run/openrc
+openrc
 touch /run/openrc/softlevel
-mkdir -p /run/nginx
+#rc-service nginx start
+#sh
+#mkdir /run/openrc
+#touch /run/openrc/softlevel
+#mkdir -p /run/nginx
