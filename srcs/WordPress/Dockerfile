@@ -1,16 +1,28 @@
-From alpine:3.12.0
+FROM alpine:3.12.0
  
-Copy ./run.bash ./tmp
+COPY ./run.bash ./tmp
 
-Copy ./default.conf ./tmp
+COPY ./default.conf ./tmp
 
-Run	apk add nginx php-fpm php-json php7-mysqli openrc vim && \
+COPY ./wp-config.php ./tmp
+
+COPY ./signify.zip ./tmp
+
+COPY ./signify-dark.zip ./tmp
+
+RUN	apk add nginx php-fpm php-json php7-mysqli openrc vim && \
 	rc-status -s && \
 	touch /run/openrc/softlevel && \
 	wget http://wordpress.org/latest.tar.gz && \
 	tar -xzvf latest.tar.gz && \
 	rm latest.tar.gz && \
 	mv tmp/default.conf etc/nginx/conf.d && \
-	mv wordpress /var/www/localhost/htdocs
+	mv wordpress /var/www/localhost/htdocs && \
+	mv ./tmp/wp-config.php  ./var/www/localhost/htdocs/wordpress/ && \
+	unzip ./tmp/signify.zip && \
+	unzip ./tmp/signify-dark.zip && \
+	mv signify ./var/www/localhost/htdocs/wordpress/wp-content/themes && \
+	mv signify-dark ./var/www/localhost/htdocs/wordpress/wp-content/themes
 
-Cmd sh tmp/run.bash
+
+CMD sh tmp/run.bash
