@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: grafana-deployment
+  name: grafana
 spec:
   replicas: 1 # tells deployment to run 2 pods matching the template
   selector:
@@ -13,7 +13,7 @@ spec:
         app: grafana 
     spec:
       containers:
-      - name: grafana-service
+      - name: grafana
         image: my_grafana
         imagePullPolicy: Never
         ports:
@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-    name: grafana-service
+    name: grafana
     annotations:
         metallb.universe.tf/allow-shared-ip: sharing key
 spec:

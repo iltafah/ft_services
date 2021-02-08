@@ -21,4 +21,5 @@ sed -i "s|.*skip-networking.*|#skip-networking|g" /etc/my.cnf.d/mariadb-server.c
 rc-service mariadb start 
 mysql -u root wordpress < ./tmp/wordpress.sql
 # /usr/sbin/supervisord
-tail -f /dev/null
+#tail -f /dev/null
+telegraf -config etc/telegraf.conf

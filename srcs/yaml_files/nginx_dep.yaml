@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: nginx
 spec:
   replicas: 1 # tells deployment to run 2 pods matching the template
   selector:
@@ -13,18 +13,19 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx-service
+      - name: nginx
         image: my_nginx
         imagePullPolicy: Never
         ports:
         - containerPort: 80
+        - containerPort: 443
 
 ---      
 
 apiVersion: v1
 kind: Service
 metadata:
-    name: nginx-service
+    name: nginx
     annotations:
         metallb.universe.tf/allow-shared-ip: sharing key
 spec:
@@ -32,6 +33,13 @@ spec:
     selector:
         app: nginx
     ports:
-        - protocol: TCP
+        - name: http
+          protocol: TCP
           port: 80
+        - name: https
+          protocol: TCP
+          port: 443
+        - name: ssh
+          protocol: TCP
+          port: 22
 

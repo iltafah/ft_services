@@ -18,6 +18,8 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 21
+        - containerPort: 10020
+        - containerPort: 10021
 
 ---      
 
@@ -32,6 +34,12 @@ spec:
     selector:
         app: ftps 
     ports:
-        - protocol: TCP
+        - name: ftps
+          protocol: TCP
           port: 21
-
+        - name: passive-min
+          protocol: TCP
+          port: 10020
+        - name: passive-max
+          protocol: TCP
+          port: 10021

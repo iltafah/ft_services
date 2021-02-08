@@ -1,11 +1,14 @@
-From alpine:3.12.0
+FROM alpine:3.12.0
 
-Copy ./run.bash ./tmp
-COPY supervisord.conf ./tmp
+COPY ./run.bash /tmp
+COPY ./supervisord.conf /tmp
+COPY ./telegraf.conf /tmp
 
-Run apk add influxdb openrc supervisor && \
-	mv ./tmp/supervisord.conf /etc && \
+RUN echo http://nl.alpinelinux.org/alpine/edge/community >> etc/apk/repositories && \
+	apk add influxdb telegraf openrc supervisor && \
+	mv /tmp/supervisord.conf /etc && \
 	openrc && \
-	touch /run/openrc/softlevel
+	touch /run/openrc/softlevel && \
+	mv /tmp/telegraf.conf /etc/telegraf.conf
 
-Cmd ./usr/bin/supervisord -c ./etc/supervisord.conf
+CMD /usr/bin/supervisord -c /etc/supervisord.conf

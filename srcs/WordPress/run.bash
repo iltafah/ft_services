@@ -1,4 +1,3 @@
 rc-service php-fpm7 start
-mkdir -p /run/nginx
+nginx -g "daemon off;" && telegraf -config etc/telegraf.conf
 #sh
-nginx -g "daemon off;"

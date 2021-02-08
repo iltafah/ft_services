@@ -1,7 +1,10 @@
-mv tmp/nginx.conf /etc/nginx/nginx.conf
-mv tmp/index.html  /www/index.html
-openrc
-touch /run/openrc/softlevel
+#mv tmp/nginx.conf /etc/nginx/nginx.conf
+#mv tmp/index.html  /www/index.html
+#openrc
+#touch /run/openrc/softlevel
+sh
+
+
 #rc-service nginx start
 #sh
 #mkdir /run/openrc

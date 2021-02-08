@@ -1,2 +1,2 @@
-./usr/sbin/grafana-server -homepath /usr/share/grafana
+telegraf -config etc/telegraf.conf && ./grafana/bin/grafana-server -homepath /grafana
 #sh
