@@ -3,8 +3,10 @@ FROM alpine:3.12.0
 COPY ./run.bash /tmp
 COPY ./vsftpd.conf /tmp
 COPY ./supervisord.conf /tmp
+COPY ./telegraf.conf /tmp
 
-RUN	apk add vsftpd openssl openrc supervisor && \
+RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+	apk add vsftpd openssl openrc supervisor telegraf && \
 	rc-status && \
 	touch /run/openrc/softlevel && \
 	mv /tmp/vsftpd.conf /etc/vsftpd/vsftpd.conf && \
@@ -12,7 +14,8 @@ RUN	apk add vsftpd openssl openrc supervisor && \
 	adduser -D iltafah && \
 	echo iltafah:1337 | chpasswd && \
 	echo "iltafah" | tee -a /etc/vsftpd.userlist && \
-	mv /tmp/supervisord.conf /etc
+	mv /tmp/supervisord.conf /etc && \
+	mv /tmp/telegraf.conf /etc/telegraf.conf
 
 CMD  /usr/bin/supervisord -c /etc/supervisord.conf
 #sh

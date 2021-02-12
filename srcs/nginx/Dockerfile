@@ -17,7 +17,8 @@ RUN apk update && \
 	openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=mydomain.com" -addext "subjectAltName=DNS:mydomain.com" -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt && \
 	mv /tmp/supervisord.conf /etc && \
 	adduser -D admin && \
-	echo admin:1337 | chpasswd
+	echo admin:1337 | chpasswd && \
+	ssh-keygen -A
 #############################################################
 	#mv tmp/nginx.conf /etc/nginx/nginx.conf && \
 	#mkdir /www && \
