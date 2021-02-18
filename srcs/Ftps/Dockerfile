@@ -20,6 +20,3 @@ RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositorie
 	chmod +x /tmp/stop-supervisor.sh
 
 CMD  /usr/bin/supervisord -c /etc/supervisord.conf
-#sh
-#CMD sh
-#sh tmp/run.bash

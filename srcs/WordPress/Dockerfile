@@ -28,5 +28,4 @@ RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositorie
 	mkdir -p /run/nginx && \
 	chmod +x /tmp/stop-supervisor.sh
 
-#CMD sh tmp/run.bash
 CMD /usr/bin/supervisord -c /etc/supervisord.conf

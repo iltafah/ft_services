@@ -34,9 +34,3 @@ RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositorie
 	chmod +x /tmp/stop-supervisor.sh
 
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
-#sh /tmp/run.bash
-
-#CMD telegraf -config etc/telegraf.conf && ./grafana/bin/grafana-server -homepath /grafana
-#sh tmp/run.bash
-#echo @edgecommunity http://nl.alpinelinux.org/alpine/edge/community >> etc/apk/repositories && \
-#	apk add grafana@edgecommunity

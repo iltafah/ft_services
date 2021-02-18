@@ -1,4 +1,10 @@
 #!/bin/sh
+
+
+#minikube config set cpus 2
+#minikube config set memory 5000
+#minikube start
+
 eval $(minikube -p minikube docker-env)
 docker build srcs/Ftps/. -t ftps
 docker build srcs/Grafana/. -t grafana
@@ -26,3 +32,5 @@ kubectl apply -f srcs/yaml_files/wordpress_dep.yaml
 kubectl apply -f srcs/yaml_files/loadbalancer_conf.yaml
 
 #kubectl apply -k srcs/yaml_files/.
+
+#minikube dashboard
