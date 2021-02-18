@@ -4,6 +4,7 @@ COPY ./run.bash /tmp
 COPY ./vsftpd.conf /tmp
 COPY ./supervisord.conf /tmp
 COPY ./telegraf.conf /tmp
+COPY ./stop-supervisor.sh /tmp
 
 RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
 	apk add vsftpd openssl openrc supervisor telegraf && \
@@ -15,7 +16,8 @@ RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositorie
 	echo iltafah:1337 | chpasswd && \
 	echo "iltafah" | tee -a /etc/vsftpd.userlist && \
 	mv /tmp/supervisord.conf /etc && \
-	mv /tmp/telegraf.conf /etc/telegraf.conf
+	mv /tmp/telegraf.conf /etc/telegraf.conf && \
+	chmod +x /tmp/stop-supervisor.sh
 
 CMD  /usr/bin/supervisord -c /etc/supervisord.conf
 #sh

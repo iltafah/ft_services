@@ -22,7 +22,7 @@ spec:
         #     secretKeyRef:
         #       name: mysql-pass
         #       key: password
-        image: my_wordpress
+        image: wordpress
         imagePullPolicy: Never
         ports:
         - containerPort: 5050

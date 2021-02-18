@@ -12,6 +12,7 @@ COPY ./influxdb.json /tmp
 COPY ./grafana.json /tmp
 COPY ./nginx.json /tmp
 COPY ./ftps.json /tmp
+COPY ./stop-supervisor.sh /tmp
 
 RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
 	apk add wget libc6-compat telegraf supervisor &&\
@@ -29,7 +30,8 @@ RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositorie
 	mv /tmp/influxdb.json /var/lib/grafana/dashboards && \
 	mv /tmp/grafana.json /var/lib/grafana/dashboards && \
 	mv /tmp/nginx.json /var/lib/grafana/dashboards && \
-	mv /tmp/ftps.json /var/lib/grafana/dashboards
+	mv /tmp/ftps.json /var/lib/grafana/dashboards && \
+	chmod +x /tmp/stop-supervisor.sh
 
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
 #sh /tmp/run.bash

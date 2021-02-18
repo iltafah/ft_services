@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: influxdb
-        image: my_influxdb
+        image: influxdb
         imagePullPolicy: Never
         ports:
         - containerPort: 8086
@@ -34,7 +34,7 @@ metadata:
     name: influxdb
 spec:
     selector:
-        app: influxdb 
+        app: influxdb
     ports:
         - protocol: TCP
           port: 8086

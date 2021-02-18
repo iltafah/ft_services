@@ -11,7 +11,6 @@ RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositorie
 	openrc && \
 	touch /run/openrc/softlevel && \
 	mv /tmp/telegraf.conf /etc/telegraf.conf
-
 	#&& \
     #mv ./tmp/supervisord.conf /etc && \
 	#echo "root" | mysql -u root -p wordpress < ./tmp/wordpress.sql

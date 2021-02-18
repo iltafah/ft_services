@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: my_mysql
+        image: mysql
         imagePullPolicy: Never
         # ###########################
         # env:

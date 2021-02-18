@@ -1,12 +1,12 @@
 #!/bin/sh
 eval $(minikube -p minikube docker-env)
-docker build srcs/Ftps/. -t my_ftps
-docker build srcs/Grafana/. -t my_grafana
-docker build srcs/InfluxDB/. -t my_influxdb
-docker build srcs/Mysql/. -t my_mysql
-docker build srcs/Phpmyadmin/. -t my_phpmyadmin
-docker build srcs/WordPress/. -t my_wordpress
-docker build srcs/nginx/. -t my_nginx
+docker build srcs/Ftps/. -t ftps
+docker build srcs/Grafana/. -t grafana
+docker build srcs/InfluxDB/. -t influxdb
+docker build srcs/Mysql/. -t mysql
+docker build srcs/Phpmyadmin/. -t phpmyadmin
+docker build srcs/WordPress/. -t wordpress
+docker build srcs/nginx/. -t nginx
 
  kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
  kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
