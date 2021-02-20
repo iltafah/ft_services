@@ -1,15 +1,24 @@
 FROM alpine:3.12.0
  
-COPY ./run.bash /tmp
-COPY ./supervisord.conf /tmp
-COPY ./wordpress.sql /tmp
-COPY ./telegraf.conf /tmp
+COPY ./configuration /tmp
 
+#Install important packages
+RUN	apk update && \
+	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+	apk add mariadb mariadb-client telegraf openrc supervisor
 
-RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
-	apk add mariadb mariadb-client telegraf openrc supervisor && \
-	openrc && \
+#Setup Mysql
+RUN	openrc && \
 	touch /run/openrc/softlevel && \
-	mv /tmp/telegraf.conf /etc/telegraf.conf
+	sed -i "s|.*skip-networking.*|#skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf && \
+	chmod +x /tmp/create_database.sh
 
-CMD sh tmp/run.bash
+#Setup Telegraf
+RUN	mv /tmp/telegraf.conf /etc/telegraf.conf
+
+#Setup Supervisor
+RUN	mv /tmp/supervisord.conf /etc && \
+	chmod +x /tmp/stop-supervisor.sh
+
+#Create database && Start Supervisor and it's child processes specified in it's config file
+CMD /tmp/create_database.sh && /usr/bin/supervisord -c /etc/supervisord.conf
