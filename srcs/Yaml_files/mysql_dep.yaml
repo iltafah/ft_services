@@ -19,7 +19,7 @@ kind: Deployment
 metadata:
   name: mysql
 spec:
-  replicas: 1 # tells deployment to run 2 pods matching the template
+  replicas: 1
   selector:
     matchLabels:
       app: mysql 
@@ -32,20 +32,6 @@ spec:
       - name: mysql
         image: mysql
         imagePullPolicy: Never
-        # ###########################
-        # env:
-        # - name: MYSQL_ROOT_PASSWORD
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: mysql-pass
-        #       key: password
-        ###########################
-        # env:
-        # - name: MYSQL_ROOT_PASSWORD
-        #   value: "admin"
-            #secretKeyRef:
-            #name: mysql-pass
-            #key: password
         ports:
         - containerPort: 3306
           name: mysql
@@ -70,4 +56,3 @@ spec:
         - protocol: TCP
           port: 3306
           targetPort: 3306
-
