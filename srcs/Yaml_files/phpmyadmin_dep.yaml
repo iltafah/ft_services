@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: phpmyadmin
 spec:
-  replicas: 1 # tells deployment to run 2 pods matching the template
+  replicas: 1
   selector:
     matchLabels:
       app: phpmyadmin 
@@ -18,20 +18,7 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 5000
-        ##############################
-        # env:
-        # - name: PMA_HOST
-        #   value: mysql
-        # - name: PMA_PORT
-        #   value: "3306"
-        # - name: MYSQL_ROOT_PASSWORD
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: mysql-pass
-        #       key: password
-        ##############################
-
-
+       
 ---      
 
 apiVersion: v1
