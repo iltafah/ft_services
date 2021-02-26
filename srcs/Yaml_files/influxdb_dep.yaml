@@ -32,7 +32,7 @@ spec:
         image: influxdb
         imagePullPolicy: Never
         ports:
-        - containerPort: 8086
+        - containerPort: 8080
         volumeMounts:
         - name: influxdb-persistent-storage
           mountPath: /var/lib/influxdb

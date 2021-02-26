@@ -1,10 +1,5 @@
 #!/bin/sh
 
-#If you want to set the cpu and the memory that minikube will use
-#minikube config set cpus 2
-#minikube config set memory 5000
-
-
 nc='\033[0m'
 
 # Bold High Intensity
@@ -21,8 +16,6 @@ white='\033[1;97m'      # White
 scyan='\e[38;05;14m'
 sblue='\e[38;05;39m'
 
-brew install catimg > /dev/null 2> /dev/null
-
 echo "${cyan}  █████▒▄▄▄█████▓     ██████ ▓█████  ██▀███   ██▒   █▓ ██▓ ▄████▄  ▓█████   ██████ ";
 echo "▓██   ▒ ▓  ██▒ ▓▒   ▒██    ▒ ▓█   ▀ ▓██ ▒ ██▒▓██░   █▒▓██▒▒██▀ ▀█  ▓█   ▀ ▒██    ▒ ";
 echo "▒████ ░ ▒ ▓██░ ▒░   ░ ▓██▄   ▒███   ▓██ ░▄█ ▒ ▓██  █▒░▒██▒▒▓█    ▄ ▒███   ░ ▓██▄   ";
@@ -34,9 +27,6 @@ echo " ░ ░      ░         ░  ░  ░     ░     ░░   ░      ░�
 echo "                          ░     ░  ░   ░           ░   ░  ░ ░         ░  ░      ░  ";
 echo "                                                  ░       ░                        ";
 echo "${nc}"
-
-
-
 
 
 
@@ -87,12 +77,12 @@ function loadbar () {
 
 function dockerfile_loadbar () {
 
-    printf "${scyan}                 .       \n";                                                      #1
-    printf "${scyan}                ':'      \n";                                                      #2
-    printf "${sblue}  |\"\/\"|     ____${scyan}:${sblue}___    \n";                                    #3
-    printf "   \  /    .\`        ',  \n";                                                             #4
-    printf "   |  \___/        O  |  \n";                                                              #5
-    printf "${scyan}~^~^~^~^~^~^~^~^~^~^~^~^~~^~^~^~^~^~^~^~^~^~^~^~^~~^~^~^~^~^~^~^~^~^~^~^~^${nc}\n";#6                 
+    printf "${scyan}               .       \n";                                                      #1
+    printf "${scyan}              ':'      \n";                                                      #2
+    printf "${sblue}|\"\/\"|     ____${scyan}:${sblue}___    \n";                                    #3
+    printf " \  /    .\`📦📦    ',  \n";                                                             #4
+    printf " |  \___/  📦📦  O  |  \n";                                                              #5
+    printf "${scyan}~^~^~^~^~^~^~^~^~^~^~^~^~~^~^~^~^~^~^~^~^~^~^~^~^~~^~^~^~^~^~^~^~^~^~^~${nc}\n";#6                 
     printf "${purp}Progress : ${blu}|%s|[0]%%%2s\n"
     
     SUB='Step'
@@ -104,34 +94,45 @@ function dockerfile_loadbar () {
             start=$(echo ${line} |  grep -o "[0-9]*/[0-9]*" | grep -o '^[0-9]*')
             end=$(echo ${line} |  grep -o "[0-9]*$")
             ratio=$((100 / end))
-            spaces=$((start * ratio / 2))
-
-            perc=$((start * ratio))
+            if [ $start -ne $end ]
+            then
+                perc=$((start * ratio))
+            else
+                perc=100
+            fi
+            spaces=$((perc / 2))
             bar_count=$((100 / 5))
-            bar_pos=$(((start*ratio) / 5))
+            bar_pos=$((perc / 5))
             bar_spaces=$((bar_count - bar_pos))
             fill=$(printf  "▇%.0s" $(seq 1 $bar_pos))
-            printf "${line7}${lineclr}${scyan}%${spaces}s                 .       \n";                                   #1
-            printf "${lineclr}${scyan}%${spaces}s                ':'      \n";                                           #2
-            printf "${lineclr}${sblue}%${spaces}s  |\"\/\"|     ____${scyan}:${sblue}___    \n";                         #3
-            printf "${lineclr}%${spaces}s   \  /    .\`        ',  \n";                                                  #4
-            printf "${lineclr}%${spaces}s   |  \___/        O  |  \n";                                                   #5
-            printf "${lineclr}${scyan}~^~^~^~^~^~^~^~^~^~^~^~^~~^~^~^~^~^~^~^~^~^~^~^~^~~^~^~^~^~^~^~^~^~^~^~^~^${nc}\n";#6
+
+            printf "${line7}${lineclr}${scyan}%${spaces}s               .       \n";                                   #1
+            printf "${lineclr}${scyan}%${spaces}s              ':'      \n";                                           #2
+            printf "${lineclr}${sblue}%${spaces}s|\"\/\"|     ____${scyan}:${sblue}___    \n";                         #3
+            printf "${lineclr}%${spaces}s \  /    .\`📦📦    ',  \n";                                                  #4
+            printf "${lineclr}%${spaces}s |  \___/  📦📦  O  |  \n";                                                   #5
+            printf "${lineclr}${scyan}~^~^~^~^~^~^~^~^~^~^~^~^~~^~^~^~^~^~^~^~^~^~^~^~^~~^~^~^~^~^~^~^~^~^~^~${nc}\n";#6
             printf "${lineclr}${purp}Progress : ${blu}|${grn}${fill}${nc}%${bar_spaces}s${blu}|${nc}[${perc}]${red}%%${nc}\n"
         fi
     done;
+    #printf "\n";
     printf "${line7}${lineclr}\n${lineclr}\n${lineclr}\n${lineclr}\n${lineclr}\n${lineclr}\n${lineclr}\n${line7}"; #for some reason I couldn't make "tput ed" work on my mac"
 }
 
 
-if  echo $(minikube ip) | grep "minikube start" 
+printf "\n\n${purp}🔥,-*' ^ '~*-.,_,.-*~ ${grn}S͓̽T͓̽A͓̽R͓̽T͓̽I͓̽N͓̽G͓̽ ͓̽M͓̽I͓̽N͓̽I͓̽K͓̽U͓̽B͓̽E͓̽ ${purp}~*-.,_,.-*~' ^ '*-,🔥\n\n"
+
+if  echo $(minikube ip) | grep "minikube start" > /dev/null
 then
     echo ${grn}
-    minikube delete --all
+    minikube delete --all              &> /dev/null
+    #If you want to set the cpu and the memory that minikube will use
+    minikube config set cpus 2        &> /dev/null
+    minikube config set memory 4000   &> /dev/null
     minikube start
     echo ${nc}
-    eval $(minikube -p minikube docker-env)
 fi
+    eval $(minikube -p minikube docker-env)
 
 
 printf "\n\n${purp}🔥,-*' ^ '~*-.,_,.-*~ ${grn}B͓̽U͓̽I͓̽L͓̽D͓̽I͓̽N͓̽G͓̽ ͓̽I͓̽M͓̽A͓̽G͓̽E͓̽S͓̽ ${purp}~*-.,_,.-*~' ^ '*-,🔥\n\n"
@@ -188,10 +189,17 @@ kubectl apply -f srcs/yaml_files/mysql_dep.yaml > /dev/null 2>&1
 loadbar
 printf "${line1}${lineclr}${grn}✔ Mysql has been created successfully ツ\n"
 
+printf "${yel}Configuring Phpmyadmin\n"
+kubectl apply -f srcs/yaml_files/phpmyadmin_dep.yaml > /dev/null 2>&1
+loadbar
+printf "${line1}${lineclr}${grn}✔ PMA has been created successfully ツ\n"
+printf "${nc}"
+
 printf "${yel}Configuring FTPS\n"
 kubectl apply -f srcs/yaml_files/ftps_dep.yaml > /dev/null 2>&1
 loadbar
 printf "${line1}${lineclr}${grn}✔ FTPS has been created successfully ツ\n"
+
 
 printf "${yel}Configuring Nginx\n"
 kubectl apply -f srcs/yaml_files/nginx_dep.yaml > /dev/null 2>&1
@@ -208,15 +216,13 @@ kubectl apply -f srcs/yaml_files/wordpress_dep.yaml > /dev/null 2>&1
 loadbar
 printf "${line1}${lineclr}${grn}✔ Wordpress has been created successfully ツ\n"
 
-printf "${yel}Configuring Phpmyadmin\n"
-kubectl apply -f srcs/yaml_files/phpmyadmin_dep.yaml > /dev/null 2>&1
-loadbar
-printf "${line1}${lineclr}${grn}✔ Phpmyadmin has been created successfully ツ\n"
-printf "${nc}"
  
 printf "${purp}👉  To run the dashboard, run the following command: ${cyan}\"minikube dashboard\"${nc}\n"
 
-catimg -w 250 ./srcs/kubeImage/kube.jpeg 2> /dev/null
+curl -s https://iterm2.com/utilities/imgcat > ./srcs/ScriptDesign/imgcat
+chmod +x ./srcs/ScriptDesign/imgcat
+./srcs/ScriptDesign/imgcat ./srcs/ScriptDesign/kube.jpeg 2> /dev/null
+rm ./srcs/ScriptDesign/imgcat
 
 ###############################################   
 ## To log in wordpress and other platforms : ##
