@@ -6,7 +6,7 @@ COPY ./nginx_web_page /tmp
 #Install important packages
 RUN apk update
 RUN	echo http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories
-RUN	apk add nginx openssl supervisor openssh telegraf
+RUN	apk add nginx openssl supervisor openssh telegraf npm
 
 #Setup Nginx
 RUN	mkdir -p /run/nginx
@@ -14,12 +14,14 @@ RUN	openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=myd
 RUN	mv /tmp/default.conf /etc/nginx/conf.d/
 
 #Setup Nginx webpage
-RUN	mv /tmp/index.html  /var/www/localhost/htdocs/
-RUN	mv /tmp/style.css /var/www/localhost/htdocs/
-RUN	mv /tmp/vanilla-tilt.js /var/www/localhost/htdocs/
-RUN	mv /tmp/images/ /var/www/localhost/htdocs/
+WORKDIR /var/www/localhost/htdocs/
+RUN	mv /tmp/index.html  ./
+RUN	mv /tmp/style.css ./
+RUN	mv /tmp/images/ ./
+RUN npm install vanilla-tilt@1.7.0
 
 #Setup Telegraf
+WORKDIR /
 RUN	mv /tmp/telegraf.conf /etc/telegraf.conf
 
 #Setup Ssh

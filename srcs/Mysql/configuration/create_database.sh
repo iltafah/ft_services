@@ -1,9 +1,9 @@
 #!/bin/sh
 
-if [ ! -f "/var/lib/mysql/ib_buffer_pool" ]; then
-    echo "---------INSTALL---------"
-    /etc/init.d/mariadb setup
+if [ ! -d "/var/lib/mysql/wordpress" ]; then
     echo "---------SETUP---------"
+    /etc/init.d/mariadb setup
+    echo "---------CREATE WP DATABASE---------"
     rc-service mariadb start
     echo "CREATE USER 'iltafah'@'%' IDENTIFIED BY '1337';" | mysql -u root
     echo "CREATE DATABASE wordpress;" | mysql -u root

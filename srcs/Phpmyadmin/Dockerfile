@@ -17,7 +17,7 @@ RUN	mkdir /var/www/localhost/htdocs/phpmyadmin/tmp
 RUN	chmod 777 /var/www/localhost/htdocs/phpmyadmin/tmp
 
 #Setup Nginx
-RUN	mkdir -p /run/nginx 
+RUN	mkdir -p /run/nginx
 RUN	mv tmp/default.conf etc/nginx/conf.d 
 
 #Setup telegraf
